@@ -1,0 +1,9 @@
+{
+  "name": "log-changes",
+  "description": "Logs Edit and Write tool calls to a searchable file for context recovery after compression",
+  "version": "1.0.0",
+  "author": {
+    "name": "Emil Aronsson"
+  },
+  "hooks": "./hooks/hooks.json"
+}
