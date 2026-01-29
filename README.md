@@ -16,14 +16,14 @@ Each session gets its own folder at `~/.claude/logs/<session_id>/`:
 ### From GitHub
 
 ```bash
-claude plugin install https://github.com/Zer0XoL/claude--context-independent-log-changes
+claude plugin install https://github.com/Zer0XoL/claude-accurate-recall
 ```
 
 ### From Local Clone
 
 ```bash
-git clone https://github.com/Zer0XoL/claude--context-independent-log-changes.git
-claude plugin install ./claude--context-independent-log-changes
+git clone https://github.com/Zer0XoL/claude-accurate-recall.git
+claude plugin install ./claude-accurate-recall
 ```
 
 ### Single Session (without installing)
