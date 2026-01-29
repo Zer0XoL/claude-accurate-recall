@@ -1,16 +1,20 @@
 #!/bin/bash
-# Log Bash commands - keeps only 10 most recent
-
-LOG_DIR="$HOME/.claude/logs"
-mkdir -p "$LOG_DIR"
-LOG_FILE="$LOG_DIR/bash.log"
-TEMP_FILE="$LOG_DIR/bash.tmp"
+# Log Bash commands - keeps only 10 most recent per session
 
 INPUT=$(cat)
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
 # Extract session_id
-SESSION_ID=$(echo "$INPUT" | grep -o '"session_id"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -1 | cut -c1-8)
+SESSION_ID=$(echo "$INPUT" | grep -o '"session_id"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -1)
+
+if [[ -z "$SESSION_ID" ]]; then
+    exit 0
+fi
+
+LOG_DIR="$HOME/.claude/logs/$SESSION_ID"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/bash.log"
+TEMP_FILE="$LOG_DIR/bash.tmp"
 
 # Extract command
 COMMAND=$(echo "$INPUT" | grep -o '"command"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 200)
@@ -21,7 +25,7 @@ OUTPUT=$(echo "$INPUT" | grep -o '"stdout"[[:space:]]*:[[:space:]]*"[^"]*"' | se
 if [[ -n "$COMMAND" ]]; then
     # Append new entry
     {
-        echo "=== [$TIMESTAMP] [$SESSION_ID] ==="
+        echo "=== [$TIMESTAMP] ==="
         echo "CMD: $COMMAND"
         echo "OUT: $OUTPUT"
         echo ""

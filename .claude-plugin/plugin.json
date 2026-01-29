@@ -5,5 +5,13 @@
   "author": {
     "name": "Emil Aronsson"
   },
-  "hooks": "./hooks/hooks.json"
+  "hooks": "./hooks/hooks.json",
+  "permissions": {
+    "allow": [
+      "Bash(ls ~/.claude/logs/*)",
+      "Bash(tail ~/.claude/logs/*)",
+      "Bash(grep * ~/.claude/logs/*)",
+      "Bash(head ~/.claude/logs/*)"
+    ]
+  }
 }

@@ -4,23 +4,25 @@ A Claude Code plugin that logs conversations and file changes for context recove
 
 ## What Gets Logged
 
-- **User messages** → `~/.claude/logs/conversation.log`
-- **Claude responses** → `~/.claude/logs/conversation.log`
-- **File edits/writes** → `~/.claude/logs/changes.log`
-- **Bash commands** → `~/.claude/logs/bash.log` (keeps last 10 only)
+Each session gets its own folder at `~/.claude/logs/<session_id>/`:
+
+- **User messages** → `conversation.log`
+- **Claude responses** → `conversation.log`
+- **File edits/writes** → `changes.log`
+- **Bash commands** → `bash.log` (keeps last 10 only)
 
 ## Installation
 
 ### From GitHub
 
 ```bash
-claude plugin install https://github.com/YOUR_USERNAME/claude--context-independent-log-changes
+claude plugin install https://github.com/Zer0XoL/claude--context-independent-log-changes
 ```
 
 ### From Local Clone
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude--context-independent-log-changes.git
+git clone https://github.com/Zer0XoL/claude--context-independent-log-changes.git
 claude plugin install ./claude--context-independent-log-changes
 ```
 
@@ -34,39 +36,55 @@ claude --plugin-dir ./claude--context-independent-log-changes
 
 ### conversation.log
 ```
-[2026-01-16 12:15:30] [abc123] USER:
+[2026-01-16 12:15:30] USER:
   fixa geographic filtering
 
-[2026-01-16 12:15:45] [abc123] CLAUDE:
+[2026-01-16 12:15:45] CLAUDE:
   Jag ändrar VectorDbService.cs...
 ```
 
 ### changes.log
 ```
-[2026-01-16 12:16:00] [abc123] EDIT ./src/VectorDbService.cs
+[2026-01-16 12:16:00] EDIT ./src/VectorDbService.cs
   OLD: match = new { any = new[] { countyCode } }...
   NEW: match = new { value = countyCode }...
 ```
 
-## Searching (Important: avoid reading full log)
+## Usage
 
-Never read the entire log into context. Use targeted searches:
+### Automatic
+
+Claude is automatically aware of the logs and can search them when needed. Just ask:
+- "What did I say earlier about authentication?"
+- "How did that file look before you changed it?"
+- "What command did you run?"
+
+### Explicit
+
+Use the `/accurate-recall` skill to search logs:
+
+```
+/accurate-recall <search term>
+```
+
+Examples:
+- `/accurate-recall authentication`
+- `/accurate-recall VectorDb`
+
+## Manual Searching
 
 ```bash
-# Search for specific topic
-grep "geographic" ~/.claude/logs/conversation.log
+# List all sessions
+ls ~/.claude/logs/
 
-# Recent messages only
-tail -20 ~/.claude/logs/conversation.log
+# Search current session (replace SESSION_ID)
+grep "geographic" ~/.claude/logs/SESSION_ID/conversation.log
 
-# First message in session
-head -5 ~/.claude/logs/conversation.log
+# Recent messages in a session
+tail -20 ~/.claude/logs/SESSION_ID/conversation.log
 
-# Find file changes
-grep "VectorDbService" ~/.claude/logs/changes.log
-
-# Changes from specific date
-grep "2026-01-16" ~/.claude/logs/changes.log
+# Search across all sessions
+grep -r "VectorDbService" ~/.claude/logs/*/changes.log
 ```
 
 ## Why
