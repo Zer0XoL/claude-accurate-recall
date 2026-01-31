@@ -1,17 +1,12 @@
 {
-  "name": "log-changes",
-  "description": "Logs Edit and Write tool calls to a searchable file for context recovery after compression",
+  "name": "accurate-recall",
   "version": "1.0.0",
+  "description": "Logs conversations and file changes for context recovery after compression",
   "author": {
     "name": "Emil Aronsson"
   },
+  "repository": "https://github.com/Zer0XoL/claude-accurate-recall",
+  "license": "MIT",
   "hooks": "./hooks/hooks.json",
-  "permissions": {
-    "allow": [
-      "Bash(ls ~/.claude/logs/*)",
-      "Bash(tail ~/.claude/logs/*)",
-      "Bash(grep * ~/.claude/logs/*)",
-      "Bash(head ~/.claude/logs/*)"
-    ]
-  }
+  "skills": "./skills/"
 }

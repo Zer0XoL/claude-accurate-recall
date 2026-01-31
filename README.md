@@ -1,4 +1,4 @@
-# log-changes Plugin
+# accurate-recall
 
 A Claude Code plugin that logs conversations and file changes for context recovery after compression.
 
@@ -13,23 +13,9 @@ Each session gets its own folder at `~/.claude/logs/<session_id>/`:
 
 ## Installation
 
-### From GitHub
-
-```bash
-claude plugin install https://github.com/Zer0XoL/claude-accurate-recall
-```
-
-### From Local Clone
-
 ```bash
 git clone https://github.com/Zer0XoL/claude-accurate-recall.git
-claude plugin install ./claude-accurate-recall
-```
-
-### Single Session (without installing)
-
-```bash
-claude --plugin-dir ./claude--context-independent-log-changes
+claude --plugin-dir ./claude-accurate-recall
 ```
 
 ## Log Format
