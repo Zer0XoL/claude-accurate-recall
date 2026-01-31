@@ -10,7 +10,17 @@ $log_dir = Join-Path $env:USERPROFILE ".claude\logs\$session_id"
 New-Item -ItemType Directory -Force -Path $log_dir | Out-Null
 $log_file = Join-Path $log_dir "conversation.log"
 
-if ($input_data -match '"prompt"\s*:\s*"([^"]*)"') {
-    $prompt = $matches[1].Substring(0, [Math]::Min(500, $matches[1].Length))
-    "[$timestamp] USER:`n  $prompt`n" | Add-Content -Path $log_file -Encoding UTF8
+try {
+    $json = $input_data | ConvertFrom-Json
+    $prompt = $json.prompt
+    if ($prompt) {
+        $entry = "[$timestamp] USER:`n  $prompt`n`n"
+        [System.IO.File]::AppendAllText($log_file, $entry, [System.Text.Encoding]::UTF8)
+    }
+} catch {
+    # Fallback to regex if JSON parse fails
+    if ($input_data -match '"prompt"\s*:\s*"([^"]*)"') {
+        $entry = "[$timestamp] USER:`n  $($matches[1])`n`n"
+        [System.IO.File]::AppendAllText($log_file, $entry, [System.Text.Encoding]::UTF8)
+    }
 }

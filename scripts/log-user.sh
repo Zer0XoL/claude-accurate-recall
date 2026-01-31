@@ -12,7 +12,7 @@ LOG_DIR="$HOME/.claude/logs/$SESSION_ID"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/conversation.log"
 
-PROMPT=$(echo "$INPUT" | grep -o '"prompt"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 500)
+PROMPT=$(echo "$INPUT" | grep -o '"prompt"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/')
 
 if [[ -n "$PROMPT" ]]; then
     {

@@ -15,12 +15,12 @@ LOG_FILE="$LOG_DIR/conversation.log"
 TRANSCRIPT_PATH=$(echo "$INPUT" | grep -o '"transcript_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -1)
 
 if [[ -n "$TRANSCRIPT_PATH" && -f "$TRANSCRIPT_PATH" ]]; then
-    RESPONSE=$(tail -20 "$TRANSCRIPT_PATH" | grep '"role"[[:space:]]*:[[:space:]]*"assistant"' | tail -1 | grep -o '"text"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 500)
+    RESPONSE=$(tail -20 "$TRANSCRIPT_PATH" | grep '"role"[[:space:]]*:[[:space:]]*"assistant"' | tail -1 | grep -o '"text"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/')
 
     if [[ -n "$RESPONSE" ]]; then
         {
             echo "[$TIMESTAMP] CLAUDE:"
-            echo "  $RESPONSE..."
+            echo "  $RESPONSE"
             echo ""
         } >> "$LOG_FILE"
     fi

@@ -16,13 +16,13 @@ TOOL_NAME=$(echo "$INPUT" | grep -o '"tool_name"[[:space:]]*:[[:space:]]*"[^"]*"
 FILE_PATH=$(echo "$INPUT" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -1)
 
 if [[ "$TOOL_NAME" == "Edit" ]]; then
-    OLD_STRING=$(echo "$INPUT" | grep -o '"old_string"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 100 | tr '\n' ' ')
-    NEW_STRING=$(echo "$INPUT" | grep -o '"new_string"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 100 | tr '\n' ' ')
+    OLD_STRING=$(echo "$INPUT" | grep -o '"old_string"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | tr '\n' ' ')
+    NEW_STRING=$(echo "$INPUT" | grep -o '"new_string"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | tr '\n' ' ')
 
     {
         echo "[$TIMESTAMP] EDIT $FILE_PATH"
-        echo "  OLD: ${OLD_STRING}..."
-        echo "  NEW: ${NEW_STRING}..."
+        echo "  OLD: ${OLD_STRING}"
+        echo "  NEW: ${NEW_STRING}"
         echo ""
     } >> "$LOG_FILE"
 

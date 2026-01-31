@@ -13,8 +13,8 @@ mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/bash.log"
 TEMP_FILE="$LOG_DIR/bash.tmp"
 
-COMMAND=$(echo "$INPUT" | grep -o '"command"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 200)
-OUTPUT=$(echo "$INPUT" | grep -o '"stdout"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 300 | tr '\n' ' ')
+COMMAND=$(echo "$INPUT" | grep -o '"command"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/')
+OUTPUT=$(echo "$INPUT" | grep -o '"stdout"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | tr '\n' ' ')
 
 if [[ -n "$COMMAND" ]]; then
     {

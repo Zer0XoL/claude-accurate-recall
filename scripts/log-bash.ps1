@@ -10,18 +10,24 @@ $log_dir = Join-Path $env:USERPROFILE ".claude\logs\$session_id"
 New-Item -ItemType Directory -Force -Path $log_dir | Out-Null
 $log_file = Join-Path $log_dir "bash.log"
 
-$command = if ($input_data -match '"command"\s*:\s*"([^"]*)"') {
-    $matches[1].Substring(0, [Math]::Min(200, $matches[1].Length))
-} else { "" }
-$output = if ($input_data -match '"stdout"\s*:\s*"([^"]*)"') {
-    $matches[1].Substring(0, [Math]::Min(300, $matches[1].Length)) -replace "`n", " "
-} else { "" }
+try {
+    $json = $input_data | ConvertFrom-Json
+    $command = $json.tool_input.command
+    $output = $json.tool_result.stdout
+    if ($output) { $output = $output -replace "`n", " " }
+} catch {
+    $command = if ($input_data -match '"command"\s*:\s*"([^"]*)"') { $matches[1] } else { "" }
+    $output = if ($input_data -match '"stdout"\s*:\s*"([^"]*)"') {
+        $matches[1] -replace "`n", " "
+    } else { "" }
+}
 
 if ($command) {
-    "=== [$timestamp] ===`nCMD: $command`nOUT: $output`n" | Add-Content -Path $log_file -Encoding UTF8
+    $entry = "=== [$timestamp] ===`nCMD: $command`nOUT: $output`n`n"
+    [System.IO.File]::AppendAllText($log_file, $entry, [System.Text.Encoding]::UTF8)
 
     if (Test-Path $log_file) {
-        $content = Get-Content $log_file -Tail 40
-        $content | Set-Content $log_file -Encoding UTF8
+        $content = Get-Content $log_file -Tail 40 -Encoding UTF8
+        [System.IO.File]::WriteAllLines($log_file, $content, [System.Text.Encoding]::UTF8)
     }
 }
