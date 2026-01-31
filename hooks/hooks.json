@@ -5,11 +5,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/log-user.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/log-user.sh\" 2>/dev/null || powershell.exe -ExecutionPolicy Bypass -NoProfile -File \"${CLAUDE_PLUGIN_ROOT}/scripts/log-user.ps1\""
           },
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/inject-awareness.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/inject-awareness.sh\" 2>/dev/null || powershell.exe -ExecutionPolicy Bypass -NoProfile -File \"${CLAUDE_PLUGIN_ROOT}/scripts/inject-awareness.ps1\""
           }
         ]
       }
@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/log-claude.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/log-claude.sh\" 2>/dev/null || powershell.exe -ExecutionPolicy Bypass -NoProfile -File \"${CLAUDE_PLUGIN_ROOT}/scripts/log-claude.ps1\""
           }
         ]
       }
@@ -30,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/log-changes.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/log-changes.sh\" 2>/dev/null || powershell.exe -ExecutionPolicy Bypass -NoProfile -File \"${CLAUDE_PLUGIN_ROOT}/scripts/log-changes.ps1\""
           }
         ]
       },
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/log-bash.sh"
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/log-bash.sh\" 2>/dev/null || powershell.exe -ExecutionPolicy Bypass -NoProfile -File \"${CLAUDE_PLUGIN_ROOT}/scripts/log-bash.ps1\""
           }
         ]
       }

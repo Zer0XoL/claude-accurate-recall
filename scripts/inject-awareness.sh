@@ -3,16 +3,12 @@
 
 INPUT=$(cat)
 
-# Extract session_id
 SESSION_ID=$(echo "$INPUT" | grep -o '"session_id"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -1)
 
-if [[ -z "$SESSION_ID" ]]; then
-    exit 0
-fi
+[[ -z "$SESSION_ID" ]] && exit 0
 
 LOG_DIR="$HOME/.claude/logs/$SESSION_ID"
 
-# Output JSON with the prompt to inject
 cat << EOF
 {
   "result": "continue",

@@ -13,14 +13,8 @@ Each session gets its own folder at `~/.claude/logs/<session_id>/`:
 
 ## Requirements
 
-- **Windows**: WSL (Windows Subsystem for Linux) required
-  ```powershell
-  # Run in PowerShell as Administrator
-  wsl --install
-  ```
-  Restart your computer after installation.
-
 - **macOS/Linux**: Works out of the box
+- **Windows**: Works out of the box (auto-detects and uses PowerShell)
 
 ## Installation
 

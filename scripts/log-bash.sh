@@ -4,26 +4,19 @@
 INPUT=$(cat)
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
-# Extract session_id
 SESSION_ID=$(echo "$INPUT" | grep -o '"session_id"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -1)
 
-if [[ -z "$SESSION_ID" ]]; then
-    exit 0
-fi
+[[ -z "$SESSION_ID" ]] && exit 0
 
 LOG_DIR="$HOME/.claude/logs/$SESSION_ID"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/bash.log"
 TEMP_FILE="$LOG_DIR/bash.tmp"
 
-# Extract command
 COMMAND=$(echo "$INPUT" | grep -o '"command"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 200)
-
-# Extract output (stdout)
 OUTPUT=$(echo "$INPUT" | grep -o '"stdout"[[:space:]]*:[[:space:]]*"[^"]*"' | sed 's/.*: *"\([^"]*\)".*/\1/' | head -c 300 | tr '\n' ' ')
 
 if [[ -n "$COMMAND" ]]; then
-    # Append new entry
     {
         echo "=== [$TIMESTAMP] ==="
         echo "CMD: $COMMAND"
@@ -31,7 +24,6 @@ if [[ -n "$COMMAND" ]]; then
         echo ""
     } >> "$LOG_FILE"
 
-    # Keep only last 10 entries (each entry is 4 lines)
     if [[ -f "$LOG_FILE" ]]; then
         tail -40 "$LOG_FILE" > "$TEMP_FILE"
         mv "$TEMP_FILE" "$LOG_FILE"
