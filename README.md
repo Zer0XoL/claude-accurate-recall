@@ -18,6 +18,16 @@ git clone https://github.com/Zer0XoL/claude-accurate-recall.git
 claude --plugin-dir ./claude-accurate-recall
 ```
 
+## Setup
+
+After installation, run the setup skill to grant log access permissions:
+
+```
+/accurate-recall:setup-permissions
+```
+
+This adds `Read(~/.claude/logs/**)` to your settings, allowing the plugin to search session logs.
+
 ## Log Format
 
 ### conversation.log
@@ -47,15 +57,15 @@ Claude is automatically aware of the logs and can search them when needed. Just 
 
 ### Explicit
 
-Use the `/accurate-recall` skill to search logs:
+Use the `/accurate-recall:accurate-recall` skill to search logs:
 
 ```
-/accurate-recall <search term>
+/accurate-recall:accurate-recall <search term>
 ```
 
 Examples:
-- `/accurate-recall authentication`
-- `/accurate-recall VectorDb`
+- `/accurate-recall:accurate-recall authentication`
+- `/accurate-recall:accurate-recall VectorDb`
 
 ## Manual Searching
 
