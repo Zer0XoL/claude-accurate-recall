@@ -11,6 +11,17 @@ Each session gets its own folder at `~/.claude/logs/<session_id>/`:
 - **File edits/writes** → `changes.log`
 - **Bash commands** → `bash.log` (keeps last 10 only)
 
+## Requirements
+
+- **Windows**: WSL (Windows Subsystem for Linux) required
+  ```powershell
+  # Run in PowerShell as Administrator
+  wsl --install
+  ```
+  Restart your computer after installation.
+
+- **macOS/Linux**: Works out of the box
+
 ## Installation
 
 ```bash
